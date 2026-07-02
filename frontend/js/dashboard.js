@@ -1,28 +1,24 @@
-const API = "http://localhost:3000/api/dashboard";
+console.log("dashboard.js loaded");
 
-async function loadDashboard(){
+const API = "https://perpustakaan-cloud-production.up.railway.app/api/dashboard";
 
-    const response = await fetch(API);
-    const result = await response.json();
+async function loadDashboard() {
+    try {
+        const response = await fetch(API);
 
-    console.log("Response API:", result);
+        const result = await response.json();
 
-    console.log(document.getElementById("totalBuku"));
-    console.log(document.getElementById("totalAnggota"));
-    console.log(document.getElementById("dipinjam"));
-    console.log(document.getElementById("dikembalikan"));
+        console.log("API:", result);
 
-    document.getElementById("totalBuku").textContent = result.data.totalBuku;
-    document.getElementById("totalAnggota").textContent = result.data.totalAnggota;
-    document.getElementById("dipinjam").textContent = result.data.dipinjam;
-    document.getElementById("dikembalikan").textContent = result.data.dikembalikan;
+        document.getElementById("totalBuku").textContent = result.data.totalBuku;
+        document.getElementById("totalAnggota").textContent = result.data.totalAnggota;
+        document.getElementById("dipinjam").textContent = result.data.dipinjam;
+        document.getElementById("dikembalikan").textContent = result.data.dikembalikan;
 
+    } catch (err) {
+        console.error("Error dashboard:", err);
+    }
 }
 
 loadDashboard();
-
-window.addEventListener("focus", () => {
-    loadDashboard();
-});
-
-loadDashboard();
+window.addEventListener("focus", loadDashboard);
